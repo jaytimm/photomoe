@@ -6,16 +6,26 @@ output:
 
 # photomoe
 
+A simple package for downloading and collaging photos from online sources.  `magick` does all the heavy lifting. You can download the development version from GitHub with:
+
+```{r eval=FALSE}
+devtools::install_github("jaytimm/photomoe")
+```
+
+
+
 ## Download images
 
-```{r message=FALSE, warning=FALSE}
+```{r include=FALSE}
 library(tidyverse)
+```
 
-tweets_df1 <- rtweet::search_tweets("#standwithukraine", 
+
+```{r message=FALSE, warning=FALSE}
+tweet_pics <- rtweet::search_tweets("#standwithukraine", 
                                     n = 1000, 
-                                    include_rts = F) 
-
-tweet_pics <- tweets_df1 %>% filter(!is.na(media_url)) 
+                                    include_rts = F) %>%
+  filter(!is.na(media_url)) 
 ```
 
 
@@ -29,55 +39,59 @@ photomoe::img_download_images(link = unlist(tweet_pics$media_url)[1:49],
 
 
 
-### Build collage
+## Build collage
 
-The `img_build_collage` function builds a collage per a user specified directory of images -- based on the `magick` package and this [post](https://masalmon.eu/2017/03/19/facesofr/).   
+The `img_build_collage` function builds a collage per a user specified directory of images -- based on the `magick` package and this [very nice post](https://masalmon.eu/2017/03/19/facesofr/).   
+
+### #standwithukraine
 
 ```{r fig.height=6, message=FALSE, warning=FALSE}
 photomoe::img_build_collage(dir = tempdir(), 
-                             dimx = 7, 
-                             dimy = 7, 
-                             prefix = 'uk')
+                            dimx = 7, 
+                            dimy = 7, 
+                            prefix = 'uk')
 ```
 
 
 
 
-### Google image links
+## Google image links
 
 ```{r fig.height=6, message=FALSE, warning=FALSE}
 search1 <- 'pointing at rainbows'
 search2 <- 'piano keys'
 links <- lapply(list(search1, search2), 
                 photomoe::img_get_gurls)
+
+head(links[[1]])
 ```
 
 
-#### pointing at rainbows
+### pointing at rainbows
 
 ```{r}
 photomoe::img_download_images(link = links[[1]], 
-                               dir = tempdir(), 
-                               prefix = search1, 
-                               scale_border = T)
+                              dir = tempdir(), 
+                              prefix = search1, 
+                              scale_border = T)
 
 photomoe::img_build_collage(dir = tempdir(), 
-                             dimx = 5, 
-                             dimy = 4, 
-                             prefix = search1)
+                            dimx = 5, 
+                            dimy = 4, 
+                            prefix = search1)
 ```
 
 
-#### piano keys
+### piano keys
 
 ```{r echo=FALSE}
 photomoe::img_download_images(link = links[[2]], 
-                               dir = tempdir(), 
-                               prefix = search2, 
-                               scale_border = T)
+                              dir = tempdir(), 
+                              prefix = search2, 
+                              scale_border = T)
 
 photomoe::img_build_collage(dir = tempdir(), 
-                             dimx = 5, 
-                             dimy = 4, 
-                             prefix = search2)
+                            dimx = 5, 
+                            dimy = 4, 
+                            prefix = search2)
 ```
