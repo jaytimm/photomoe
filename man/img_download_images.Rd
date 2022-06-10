@@ -4,7 +4,7 @@
 \alias{img_download_images}
 \title{Download images from urls.}
 \usage{
-img_download_images(link, dir, prefix, scale_border = T)
+img_download_images(link, dir, prefix)
 }
 \arguments{
 \item{link}{URL of image}
@@ -12,8 +12,6 @@ img_download_images(link, dir, prefix, scale_border = T)
 \item{dir}{Directory to download images}
 
 \item{prefix}{File name prefix for downloaded images}
-
-\item{scale_border}{Boolean, scale images and add border}
 }
 \value{
 Image files

@@ -4,10 +4,10 @@
 \alias{img_build_collage}
 \title{Aggregate images as collage.}
 \usage{
-img_build_collage(dir, dimx, dimy, prefix = NULL)
+img_build_collage(paths, dimx, dimy, prefix = NULL)
 }
 \arguments{
-\item{dir}{Directory of images}
+\item{paths}{File paths}
 
 \item{dimx}{Collage dimension on x-axis}
 

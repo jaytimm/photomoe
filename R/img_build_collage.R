@@ -1,25 +1,23 @@
 #' Aggregate images as collage.
 #'
 #' @name img_build_collage
-#' @param dir Directory of images 
+#' @param paths File paths
 #' @param dimx Collage dimension on x-axis
 #' @param dimy Collage dimension on y-axis
 #' @param prefix File name prefix of images to include in collage
 #' @return An image
-#' 
+#'
 #' @export
 #' @rdname img_build_collage
 #'
-img_build_collage <- function(dir, 
-                              dimx, 
-                              dimy, 
+img_build_collage <- function(paths,
+                              dimx,
+                              dimy,
                               prefix = NULL) {
-
-  ### https://bigbinary.com/blog/configuring-memory-allocation-in-imagemagick
 
   invisible(gc(full=TRUE))
 
-  files <- grep('jpeg', dir(dir, full.names = TRUE), value = T)
+  files <- paths
 
   if(is.null(prefix)) { ## this goes elsewhere --
     prefix <- paste0(stringi::stri_rand_strings(1, 3, '[A-Z]'),
@@ -51,6 +49,7 @@ img_build_collage <- function(dir,
   fs <- paste0(tempdir(), "/", prefix, "_cols", 0: (dimx - 1), ".jpeg")
 
   x3 <- magick::image_read(fs)
+
 
   x4 <- magick::image_scale(x3, "500x1000") ## scales columns
   pic <- magick::image_append(x4, stack = FALSE)
