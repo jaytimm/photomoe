@@ -4,7 +4,7 @@
 \alias{img_download_images}
 \title{Download images from urls.}
 \usage{
-img_download_images(link, dir, prefix)
+img_download_images(link, dir, prefix, scale_border = T)
 }
 \arguments{
 \item{link}{URL of image}

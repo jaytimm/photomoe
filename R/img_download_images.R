@@ -13,17 +13,18 @@
 #'
 img_download_images <- function(link,
                                 dir,
-                                prefix) {
+                                prefix,
+                                scale_border = T) {
 
   for (i in 1:length(link)) {
     fname <- paste0(dir, '/', gsub(' ', '', prefix), i, '.jpeg')
     utils::download.file(link[i], fname, mode = 'wb')
 
-    # if(scale_border) {
-    #   y1 <- magick::image_read(fname)
-    #   y2 <- magick::image_scale(y1, "1000")
-    #   y3 <- magick::image_border(y2, 'white', '10x10')
-    #   magick::image_write(y3, fname)  }
+    if(scale_border) {
+      y1 <- magick::image_read(fname)
+      y2 <- magick::image_scale(y1, "1000")
+      y3 <- magick::image_border(y2, 'white', '10x10')
+      magick::image_write(y3, fname)  }
   }
   unlink(dir)
 }
